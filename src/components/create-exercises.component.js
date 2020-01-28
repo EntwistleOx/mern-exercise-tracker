@@ -3,7 +3,7 @@ import axios from 'axios'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 
-export default class EditExercises extends Component {
+export default class CreateExercises extends Component {
     constructor(props) {
         super(props)
 
@@ -23,16 +23,6 @@ export default class EditExercises extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:5000/exercises/${this.props.match.params.id}`)
-            .then(res => {
-                this.setState({
-                    username: res.data.username,
-                    description: res.data.description,
-                    duration: res.data.duration,
-                    date: new Date(res.data.date)
-                })
-            })
-
         axios.get('http://localhost:5000/users/')
             .then(res => {
                 if (res.data.length > 0) {
@@ -80,7 +70,7 @@ export default class EditExercises extends Component {
 
         console.log(exercise)
 
-        axios.patch(`http://localhost:5000/exercises/${this.props.match.params.id}`, exercise)
+        axios.post('http://localhost:5000/exercises/', exercise)
             .then(res => console.log(res.data))
 
         window.location = '/'
@@ -89,7 +79,7 @@ export default class EditExercises extends Component {
     render() {
         return (
             <div>
-                <h3>Edit Exercise Log</h3>
+                <h3>Create New Exercise</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username:</label>
@@ -147,7 +137,7 @@ export default class EditExercises extends Component {
                         <input
                             type="submit"
                             className="btn btn-primary"
-                            value="Edit Exercise Log"
+                            value="Create Exercise Log"
                         />
                     </div>
                 </form>
